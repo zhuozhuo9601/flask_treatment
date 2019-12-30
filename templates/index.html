@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+</head>
+<body>
+    <h1>flask项目练习</h1>
+    <div>
+        <select onchange="select_value()" id="select">
+            <option value="1">苹果</option>
+            <option value="2">梨</option>
+            <option value="3">桃子</option>
+        </select>
+        <button onclick="delete1()">点击我</button>
+    </div>
+<script>
+    function select_value() {
+//        var abc = $("#select").val();
+        var abc = {
+            "a":'1',
+            "b":'2',
+            "c":'3'
+        };
+        $.ajax({
+        // 请求方式
+        type: "post",
+        // contentType
+        contentType: "application/json",
+        // dataType
+        dataType: "json",
+        // url
+        url: '/user/add',
+        // 把JS的对象或数组序列化一个json 字符串
+        data: JSON.stringify(abc),
+        // result 为请求的返回结果对象
+        success: function (result) {
+
+        }
+    });
+    }
+    function delete1() {
+        $.get('user/delete/王五',function () {
+
+        })
+    }
+</script>
+</body>
+</html>

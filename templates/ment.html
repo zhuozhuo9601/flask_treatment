@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap.css">
+</head>
+<body>
+<div style="background-color: #37d6ff;width: auto;height: 200px;"></div>
+<div>
+    <div style="background-color: #fff5fd;width: 100px;height: 200px;display: inline;float: left">
+        <ul>
+            <li>管理</li>
+            <li>管理</li>
+            <li>管理</li>
+        </ul>
+
+    </div>
+    <div style="display: inline;float: left">
+        <table class="table">
+            <tr>
+                <th>班级信息表</th>
+            </tr>
+            <tr>
+                <th style="text-align: center;width: 200px;">序号</th>
+                <th style="text-align: center;width: 400px;">班级名称</th>
+                <th style="text-align: center;width: 500px;">创建时间</th>
+                <th style="text-align: center;width: 300px;">操作</th>
+            </tr>
+            {% for data in datas %}
+            <tr>
+                <th style="text-align: center">{{ data.id }}</th>
+                <th style="text-align: center">{{ data.name }}</th>
+                <th style="text-align: center">{{ data.time }}</th>
+                <th style="text-align: center">
+                    <button class="btn btn-info btn-sm">添加</button>
+                    <button class="btn btn-success btn-sm">编辑</button>
+                    <button class="btn btn-danger btn-sm">删除</button>
+                    <button class="btn btn-warning btn-sm">查看</button>
+                </th>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+</body>
+</html>
