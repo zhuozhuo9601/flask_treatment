@@ -5,13 +5,17 @@
     <title>Title</title>
     <script type="text/javascript" src="../static/jquery.js"></script>
     <script type="text/javascript" src="../static/bootstrap.js"></script>
+    <script type="text/javascript" src="../static/ment.js"></script>
+    <script type="text/javascript" src="../static/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="../static/bootstrap-datetimepicker.zh-CN.js"></script>
     <link rel="stylesheet" type="text/css" href="../static/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap-datetimepicker.min.css">
 </head>
 <body>
 <div style="background-color: #37d6ff;width: auto;height: 200px;"></div>
 <div>
     <div style="background-color: #fff5fd;width: 100px;height: 200px;display: inline;float: left">
-        <ul>
+        <ul style="list-style-type:circle;">
             <li>管理</li>
             <li>管理</li>
             <li>管理</li>
@@ -30,20 +34,110 @@
                 <th style="text-align: center;width: 300px;">操作</th>
             </tr>
             {% for data in datas %}
-            <tr>
-                <th style="text-align: center">{{ data.id }}</th>
-                <th style="text-align: center">{{ data.name }}</th>
-                <th style="text-align: center">{{ data.time }}</th>
-                <th style="text-align: center">
-                    <button class="btn btn-info btn-sm">添加</button>
-                    <button class="btn btn-success btn-sm">编辑</button>
-                    <button class="btn btn-danger btn-sm">删除</button>
-                    <button class="btn btn-warning btn-sm">查看</button>
-                </th>
-            </tr>
+                <tr>
+                    <th style="text-align: center">{{ data.id }}</th>
+                    <th style="text-align: center" id="th_name{{ data.id }}">{{ data.name }}</th>
+                    <th style="text-align: center" id="th_time{{ data.id }}">{{ data.time }}</th>
+                    <th style="text-align: center">
+                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#addModal">添加</button>
+                        <button id="update{{ data.id }}" class="btn btn-success btn-sm"
+                                onclick="update(this.id, 'model')" data-toggle="modal" data-target="#updateModal">编辑
+                        </button>
+                        <button class="btn btn-danger btn-sm" id="delete{{ data.id }}" onclick="del(this.id)">删除</button>
+                        <button class="btn btn-warning btn-sm">查看</button>
+                    </th>
+                </tr>
             {% endfor %}
         </table>
     </div>
 </div>
+<!-- 按钮触发模态框 -->
+{#<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">开始演示模态框</button>#}
+<!-- 模态框（Modal） -->
+<!--添加弹出框-->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">添加一条数据</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="/user/add/" id="add_form">
+                    <div class="input-group">
+                        <span class="input-group-addon">名字:</span>
+                        <input type="text" class="form-control" name="username" placeholder="name">
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group date form_datetime" data-date-format="yyyy-mm-dd hh:ii:ss">
+                            <span class="input-group-addon">时间:</span>
+                            <input class="form-control" size="20" type="text" value="" readonly name="time">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                        </div>
+
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="add()">提交更改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!--编辑弹出框-->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">修改一条数据</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="/user/update/" id="update_form">
+                    <div class="input-group" style="display: none">
+                        <span class="input-group-addon">ID:</span>
+                        <input type="text" class="form-control" name="updateid" placeholder="id" id="updateid">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">名字:</span>
+                        <input type="text" class="form-control" name="updatename" placeholder="name" id="updatename">
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group date form_datetime" data-date-format="yyyy-mm-dd hh:ii:ss">
+                            <span class="input-group-addon">时间:</span>
+                            <input class="form-control" size="20" type="text" value="" readonly name="updatetime"
+                                   id="updatetime">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="update('none', 'update')">提交更改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script>
+    $(document).ready(function () {
+
+        $(".form_datetime").datetimepicker({
+            language: "zh-CN",
+            format: "yyyy-mm-dd hh:ii:ss",
+            autoclose: true,
+            showMeridian: 1,
+            todayBtn: true
+        });
+
+    });
+</script>
 </body>
 </html>
