@@ -29,6 +29,10 @@ user_bp=Blueprint('user',__name__)
 @user_bp.route('/index', methods=['GET'])
 def user_index():
     datas = Student.query.all()
+    # 测试调用模型类方法
+    # 必须有model对象，然后对象直接调用方法
+    # a = Student.query.get(1)
+    # print(a.abc())
     return render_template('ment.html', datas=datas)
 
 @user_bp.route('/add/', methods=['POST'])
