@@ -129,8 +129,13 @@ def user_delete():
                     if sub:
                         sub_obj = Subject.query.filter(Subject.name==sub).first()
                         sub_obj.stu_subject.remove(user)
-                db.session.delete(user)
+                # db.session.delete(user)
                 db.session.commit()
+                try:
+                    db.session.delete(user)
+                    db.session.commit()
+                except Exception as e:
+                    pass
                 data['code'] = '200'
                 data['msg'] = '删除成功'
         except Exception as e:
