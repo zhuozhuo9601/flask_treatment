@@ -29,21 +29,31 @@
             </tr>
             <tr>
                 <th style="text-align: center;width: 200px;">序号</th>
-                <th style="text-align: center;width: 400px;">班级名称</th>
-                <th style="text-align: center;width: 500px;">创建时间</th>
+                <th style="text-align: center;width: 300px;">学生名称</th>
+                <th style="text-align: center;width: 300px;">课程</th>
+                <th style="text-align: center;width: 300px;">学校</th>
                 <th style="text-align: center;width: 300px;">操作</th>
             </tr>
             {% for data in datas %}
                 <tr>
                     <th style="text-align: center">{{ data.id }}</th>
-                    <th style="text-align: center" id="th_name{{ data.id }}">{{ data.name }}</th>
-                    <th style="text-align: center" id="th_time{{ data.id }}">{{ data.time }}</th>
+                    <th style="text-align: center" id="th_name{{ data.id }}">{{ data.student_name }}
+                    </th>
+                    <th style="text-align: center" id="th_subject{{ data.id }}">
+                        {% for sub in data.subject_name %}
+                            <span>{{ sub.name }}--</span>
+                        {% endfor %}
+                    </th>
+                    <th style="text-align: center" id="th_school{{ data.id }}">{{ data.school_name }}</th>
                     <th style="text-align: center">
-                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#addModal">添加</button>
-                        <button id="update{{ data.id }}" class="btn btn-success btn-sm"
-                                onclick="update(this.id, 'model')" data-toggle="modal" data-target="#updateModal">编辑
+                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#addModal"
+                                onclick="add_select(this.id, 'add')">添加
                         </button>
-                        <button class="btn btn-danger btn-sm" id="delete{{ data.id }}" onclick="del(this.id)">删除</button>
+                        <button id="update{{ data.id }}" class="btn btn-success btn-sm"
+                                onclick="add_select(this.id, 'update')" data-toggle="modal" data-target="#updateModal">编辑
+                        </button>
+                        <button class="btn btn-danger btn-sm" id="delete{{ data.id }}" onclick="del(this.id)">删除
+                        </button>
                         <button class="btn btn-warning btn-sm">查看</button>
                     </th>
                 </tr>
@@ -68,16 +78,28 @@
                         <span class="input-group-addon">名字:</span>
                         <input type="text" class="form-control" name="username" placeholder="name">
                     </div>
-                    <div class="form-group">
-                        <div class="input-group date form_datetime" data-date-format="yyyy-mm-dd hh:ii:ss">
-                            <span class="input-group-addon">时间:</span>
-                            <input class="form-control" size="20" type="text" value="" readonly name="time">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                        </div>
-
+                    {#                    这是时间插件#}
+                    {#                    <div class="form-group">#}
+                    {#                        <div class="input-group date form_datetime" data-date-format="yyyy-mm-dd hh:ii:ss">#}
+                    {#                            <span class="input-group-addon">时间:</span>#}
+                    {#                            <input class="form-control" size="20" type="text" value="" readonly name="time">#}
+                    {#                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>#}
+                    {#                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>#}
+                    {#                        </div>#}
+                    {##}
+                    {#                    </div>#}
+                    <div class="input-group">
+                        <span class="input-group-addon">课程:</span>
+                        <select name="select_sub" class="form-control" id="select_sub">
+                            <option>请选择</option>
+                        </select>
                     </div>
-
+                    <div class="input-group">
+                        <span class="input-group-addon">学校:</span>
+                        <select name="select_sch" class="form-control" id="select_sch">
+                            <option>请选择</option>
+                        </select>
+                    </div>
 
                 </form>
             </div>
@@ -107,15 +129,27 @@
                         <span class="input-group-addon">名字:</span>
                         <input type="text" class="form-control" name="updatename" placeholder="name" id="updatename">
                     </div>
-                    <div class="form-group">
-                        <div class="input-group date form_datetime" data-date-format="yyyy-mm-dd hh:ii:ss">
-                            <span class="input-group-addon">时间:</span>
-                            <input class="form-control" size="20" type="text" value="" readonly name="updatetime"
-                                   id="updatetime">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                        </div>
-
+                    {#                    <div class="form-group">#}
+                    {#                        <div class="input-group date form_datetime" data-date-format="yyyy-mm-dd hh:ii:ss">#}
+                    {#                            <span class="input-group-addon">时间:</span>#}
+                    {#                            <input class="form-control" size="20" type="text" value="" readonly name="updatetime"#}
+                    {#                                   id="updatetime">#}
+                    {#                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>#}
+                    {#                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>#}
+                    {#                        </div>#}
+                    {##}
+                    {#                    </div>#}
+                    <div class="input-group">
+                        <span class="input-group-addon">课程:</span>
+                        <select name="update_sub" class="form-control" id="update_sub">
+                            <option>请选择</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">学校:</span>
+                        <select name="update_sch" class="form-control" id="update_sch">
+                            <option>请选择</option>
+                        </select>
                     </div>
                 </form>
             </div>
