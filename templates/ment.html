@@ -3,25 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script type="text/javascript" src="../static/jquery.js"></script>
-    <script type="text/javascript" src="../static/bootstrap.js"></script>
-    <script type="text/javascript" src="../static/ment.js"></script>
-    <script type="text/javascript" src="../static/bootstrap-datetimepicker.min.js"></script>
-    <script type="text/javascript" src="../static/bootstrap-datetimepicker.zh-CN.js"></script>
-    <link rel="stylesheet" type="text/css" href="../static/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../static/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap-datetimepicker.min.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='ment.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bootstrap-datetimepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='bootstrap-datetimepicker.zh-CN.js') }}"></script>
 </head>
 <body>
 <div style="background-color: #37d6ff;width: auto;height: 200px;"></div>
 <div>
     <div style="background-color: #fff5fd;width: 100px;height: 200px;display: inline;float: left">
         <ul style="list-style-type:circle;">
-            <li>管理</li>
-            <li>管理</li>
-            <li>管理</li>
+            <li><a href="{{ url_for('user.user_index') }}">学生管理</a></li>
+            <li><a href="{{ url_for('user.subject_index') }}">课程管理</a></li>
+            <li><a href="{{ url_for('user.user_index') }}">学校管理</a></li>
         </ul>
-
     </div>
+
+    {% block body %}
     <div style="display: inline;float: left">
         <table class="table">
             <tr>
@@ -60,11 +61,13 @@
             {% endfor %}
         </table>
     </div>
+    {% endblock %}
 </div>
 <!-- 按钮触发模态框 -->
 {#<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">开始演示模态框</button>#}
 <!-- 模态框（Modal） -->
 <!--添加弹出框-->
+{% block hidden %}
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -160,6 +163,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
+{% endblock %}
 <script>
     $(document).ready(function () {
 

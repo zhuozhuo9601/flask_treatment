@@ -168,3 +168,25 @@ def add_select():
         subject_dict['sub_name'] = sub.name
         select_list.append(subject_dict)
     return jsonify(select_list)
+
+
+@user_bp.route('/subject/', methods=['GET'])
+def subject_index():
+    subjects = Subject.query.all()
+    sub_datas = []
+    for sub in subjects:
+        sub_dict = {}
+        stu_list = []
+        sch_list = []
+        sub_dict['sub'] = sub.name
+        sub_dict['id'] = sub.id
+        for stu in sub.stu_subject:
+            stu_name = stu.name
+            stu_list.append(stu_name)
+            sub_dict['stu_name'] = stu_list
+        for sch in sub.sch_subject:
+            sch_name = sch.name
+            sch_list.append(sch_name)
+            sub_dict['sch_name'] = sch_list
+        sub_datas.append(sub_dict)
+    return render_template('subject.html', sub_datas=sub_datas)

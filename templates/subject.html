@@ -1,0 +1,48 @@
+{% extends "ment.html" %}
+{% block body %}
+    <div style="display: inline;float: left">
+        <table class="table">
+            <tr>
+                <th>班级信息表</th>
+            </tr>
+            <tr>
+                <th style="text-align: center;width: 200px;">序号</th>
+                <th style="text-align: center;width: 300px;">课程</th>
+                <th style="text-align: center;width: 300px;">学生名称</th>
+                <th style="text-align: center;width: 300px;">学校</th>
+                <th style="text-align: center;width: 300px;">操作</th>
+            </tr>
+            {% for data in sub_datas %}
+                <tr>
+                    <th style="text-align: center">{{ data.id }}</th>
+                    <th style="text-align: center" id="th_subject{{ data.id }}">{{ data.sub }}</th>
+
+                    <th style="text-align: center" id="th_name{{ data.id }}">
+                        {% for stu in data.stu_name %}
+                            {{ stu }}
+                        {% endfor %}
+                    </th>
+                    <th style="text-align: center" id="th_school{{ data.id }}">
+                        {% for sch in data.sch_name %}
+                            {{ sch }}
+                        {% endfor %}
+                    </th>
+                    <th style="text-align: center">
+                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#addModal"
+                                onclick="add_select(this.id, 'add')">添加
+                        </button>
+                        <button id="update{{ data.id }}" class="btn btn-success btn-sm"
+                                onclick="add_select(this.id, 'update')" data-toggle="modal" data-target="#updateModal">
+                            编辑
+                        </button>
+                        <button class="btn btn-danger btn-sm" id="delete{{ data.id }}" onclick="del(this.id)">删除
+                        </button>
+                        <button class="btn btn-warning btn-sm">查看</button>
+                    </th>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+{% block hidden %}
+{% endblock %}
