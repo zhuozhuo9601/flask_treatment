@@ -9,10 +9,12 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
 from manage.configs import db
+from operation.tenance import opera
 from user.user_center import user_bp
 
 app = Flask(__name__)
 app.register_blueprint(user_bp,url_prefix='/user')
+app.register_blueprint(opera,url_prefix='/opera')
 
 # "mysql+pymysql://root:zsh123@127.0.0.1:3306/basic12"
 # '数据库类型://数据库登录名:数据库登录密码@数据库的地址:数据库的端口/数据库的名字'

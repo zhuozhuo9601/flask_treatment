@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <script href="js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html"></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="#">Sys Info<span class="sr-only">(current)</span></a></li>
+                <li><a href="/">系统</a></li>
+                <li><a href="/cpu/">CPU</a></li>
+                <li><a href="/memory/">内存</a></li>
+                <li><a href="/disk/">硬盘</a></li>
+                <li><a href="/user/">用户</a></li>
+            </ul>
+
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="col-xs-1">
+</div>
+
+{% block content %}
+<div class="col-xs-9">
+    <table class="table table-bordered">
+      <tr >
+          <th width="400">主机名</th>
+          <th>{{master}}</th>
+      </tr>
+        <tr>
+          <th>内核名称</th>
+          <th>{{system}}</th>
+      </tr>
+        <tr>
+          <th>发行版本号</th>
+          <th>{{machine}}</th>
+      </tr>
+        <tr>
+          <th>内核版本</th>
+          <th>{{version}}</th>
+      </tr>
+        <tr>
+          <th>系统构架</th>
+          <th>{{architecture}}</th>
+      </tr>
+        <tr>
+          <th>现在时间</th>
+          <th>{{now_time}}</th>
+      </tr>
+        <tr>
+          <th>开机时间</th>
+          <th>{{boot_time}}</th>
+      </tr>
+        <tr>
+          <th>运行时间</th>
+          <th>{{delta_time}}</th>
+      </tr>
+
+    </table>
+    </div>
+{% endblock %}
+
+<div class="col-xs-1">
+</div>
+</body>
+</html>
